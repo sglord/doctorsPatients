@@ -16,7 +16,7 @@ export const fetchDoctor = id => async dispatch => {
 		const { data } = await axios.get(`/api/doctors/${id}`);
 		dispatch(setDoctor(data || 'Doctor not found'));
 	} catch (error) {
-		throw new Error();
+		throw new Error('Could not load doctor information');
 	}
 };
 export const fetchDoctorPatients = id => async dispatch => {
@@ -24,7 +24,7 @@ export const fetchDoctorPatients = id => async dispatch => {
 		const { data } = await axios.get(`/api/doctors/${id}/patients`);
 		dispatch(setDoctorPatients(data.patients || 'Patients not found'));
 	} catch (error) {
-		throw new Error();
+		throw new Error('Could not load Patients');
 	}
 };
 export const fetchDoctorSinglePatient = (id, patientId) => async dispatch => {
@@ -32,9 +32,9 @@ export const fetchDoctorSinglePatient = (id, patientId) => async dispatch => {
 		const { data } = await axios.get(
 			`/api/doctors/${id}/patients/${patientId}`
 		);
-		dispatch(setDoctorSinglePatient(data || 'patient not found'));
+		dispatch(setDoctorSinglePatient(data));
 	} catch (error) {
-		throw new Error();
+		throw new Error('Patient not found');
 	}
 };
 
