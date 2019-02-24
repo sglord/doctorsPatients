@@ -22,7 +22,7 @@ async function seed() {
 			age: 47,
 			address: '555 avenue',
 			phone: '',
-			password: '123'
+			password: 'xxx'
 		}),
 		Patient.create({
 			email: 'Erik@email.com',
@@ -30,7 +30,7 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: 'zzz'
 		}),
 		Patient.create({
 			email: 'Ryan@email.com',
@@ -38,7 +38,7 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: '1234'
 		}),
 		Patient.create({
 			email: 'John@email.com',
@@ -46,7 +46,7 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: '12345'
 		}),
 		Patient.create({
 			email: 'Joseph@email.com',
@@ -54,7 +54,7 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: '1324124'
 		}),
 		Patient.create({
 			email: 'Jay@email.com',
@@ -62,7 +62,7 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: 'afdsaf'
 		}),
 		Patient.create({
 			email: 'Danielle@email.com',
@@ -70,7 +70,7 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: '1324'
 		}),
 		Patient.create({
 			email: 'Melanie@email.com',
@@ -78,7 +78,7 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: 'adfasdf'
 		}),
 		Patient.create({
 			email: 'Megan@email.com',
@@ -86,19 +86,19 @@ async function seed() {
 			age: 35,
 			address: '123 street',
 			phone: '',
-			password: '123'
+			password: 'adfafadf'
 		})
 	]);
 	const doctors = await Promise.all([
 		Doctor.create({
 			email: 'cody@email.com',
 			name: 'Dr. Cody',
-			password: '123'
+			password: '12345xx'
 		}),
 		Doctor.create({
 			email: 'alex@email.com',
 			name: 'Dr. Alex',
-			password: '123'
+			password: '1234xx'
 		})
 	]);
 

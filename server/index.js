@@ -22,7 +22,9 @@ if (process.env.NODE_ENV !== 'production') require('../secrets');
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id));
 
+// need to handle doctor or user login to find by id
 passport.deserializeUser(async (id, done) => {
+	console.log('passport');
 	try {
 		const user = await db.models.doctor.findById(id);
 		done(null, user);
