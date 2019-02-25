@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-	Header,
-	Icon,
-	Container,
-	Divider,
-	List,
-	Button,
-	Grid,
-	GridColumn,
-	Table,
-	Form,
-	Input
-} from 'semantic-ui-react';
+import { Container, Button, Grid, Form } from 'semantic-ui-react';
 
 class UserInfo extends Component {
 	render() {

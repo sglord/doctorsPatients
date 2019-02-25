@@ -1,31 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
+import { Menu } from 'semantic-ui-react';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-	<div>
-		<h1>DoctorsPatients</h1>
-		<nav>
-			{isLoggedIn ? (
-				<div>
-					{/* The navbar will show these links after you log in */}
-					<Link to="/home">Home</Link>
-					<a href="#" onClick={handleClick}>
-						Logout
-					</a>
-				</div>
-			) : (
-				<div>
-					{/* The navbar will show these links before you log in */}
-					<Link to="/login">Login</Link>
-				</div>
-			)}
-		</nav>
-		<hr />
-	</div>
-);
+class Navbar extends Component {
+	state = {
+		activeItem: 'home'
+	};
+
+	handleItemClick = (evt, { name }) => this.setState({ activeItem: name });
+
+	handleLogOut() {
+		this.props.logout();
+	}
+	render() {
+		const { activeItem } = this.state;
+		const { isLoggedIn } = this.props;
+		return (
+			<div>
+				<Menu pointing>
+					<Menu.Item
+						as={Link}
+						to="/home"
+						name="DoctorsPatients"
+						icon="medkit"
+						onClick={this.handleItemClick}
+					/>
+					<Menu.Item
+						as={Link}
+						to="/home"
+						name="home"
+						icon="child"
+						active={activeItem === 'home'}
+						onClick={this.handleItemClick}
+					/>
+
+					<Menu.Menu position="right">
+						{isLoggedIn ? null : (
+							<Menu.Item
+								as={Link}
+								to="/login"
+								name="Login"
+								icon="user"
+								active={activeItem === 'Login'}
+								onClick={this.handleItemClick}
+							/>
+						)}
+						{isLoggedIn ? (
+							<Menu.Item
+								name="Logout"
+								icon="remove user"
+								onClick={this.handleLogOut.bind(this)}
+							/>
+						) : null}
+					</Menu.Menu>
+				</Menu>
+			</div>
+		);
+	}
+}
 
 /**
  * CONTAINER
@@ -38,9 +73,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
 	return {
-		handleClick() {
-			dispatch(logout());
-		}
+		logout: () => dispatch(logout())
 	};
 };
 
@@ -50,6 +83,5 @@ export default connect(mapState, mapDispatch)(Navbar);
  * PROP TYPES
  */
 Navbar.propTypes = {
-	handleClick: PropTypes.func.isRequired,
 	isLoggedIn: PropTypes.bool.isRequired
 };

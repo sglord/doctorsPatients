@@ -1,31 +1,26 @@
 const router = require('express').Router();
-const { Doctor, Patient } = require('../db/models');
+const { Doctor, Patient, User } = require('../db/models');
 module.exports = router;
 
-router.post('/patients', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
 	try {
-		const user = await Patient.findOne({ where: { email: req.body.email } });
-		if (!user) {
-			console.log('Patient Not found:', req.body.email);
-			res.status(401).send('Wrong username and/or password');
-		} else if (!user.correctPassword(req.body.password)) {
-			console.log('Incorrect password for patient:', req.body.email);
-			res.status(401).send('Wrong email and/or password');
-		} else {
-			req.login(user, err => (err ? next(err) : res.json(user)));
+		console.log(req.body.method);
+		let user;
+		if (req.body.method === 'doctors') {
+			user = await User.findOne({
+				where: { email: req.body.email }
+				// include: [{ model: Doctor }]
+			});
 		}
-	} catch (err) {
-		next(err);
-	}
-});
-router.post('/doctors', async (req, res, next) => {
-	try {
-		const user = await Doctor.findOne({ where: { email: req.body.email } });
+		if (req.body.method === 'patients') {
+			user = await User.findOne({
+				where: { email: req.body.email }
+				// include: [{ model: Patient }]
+			});
+		}
 		if (!user) {
-			console.log('Doctor Not found:', req.body.email);
 			res.status(401).send('Wrong username and/or password');
 		} else if (!user.correctPassword(req.body.password)) {
-			console.log('Incorrect password for patient:', req.body.email);
 			res.status(401).send('Wrong email and/or password');
 		} else {
 			req.login(user, err => (err ? next(err) : res.json(user)));

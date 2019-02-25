@@ -14,7 +14,7 @@ export const fetchPatient = id => async dispatch => {
 
 // handle updating state to the updated patient
 export const updatePatient = (id, updatedPatient) => async dispatch => {
-	const { data } = await axios.put(`/api/patients/${id}`, updatePatient);
+	const { data } = await axios.put(`/api/patients/${id}`, updatedPatient);
 	dispatch(setPatient(data));
 };
 

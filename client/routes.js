@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { UserHome } from './components';
 import { me } from './store';
 import { PatientLogin, DoctorLogin } from './components/auth-form';
+import DoctorHome from './components/DoctorHome';
 
 /**
  * COMPONENT
@@ -24,8 +25,8 @@ class Routes extends Component {
 				<Route path="/login/patients" component={PatientLogin} />
 				{isLoggedIn && (
 					<Switch>
-						{/* Routes placed here are only available after logging in */}
 						<Route path="/home" component={UserHome} />
+						<Route path="/doctorHome" component={DoctorHome} />
 					</Switch>
 				)}
 				{/* Displays our Login component as a fallback */}

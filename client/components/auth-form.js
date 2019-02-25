@@ -1,37 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { auth } from '../store';
-
+import { Modal, Segment, Grid, Form, Button, Divider } from 'semantic-ui-react';
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-	const { name, displayName, handleSubmit, error } = props;
+class AuthForm extends Component {
+	state = {
+		open: false
+	};
 
-	return (
-		<div>
-			<form onSubmit={handleSubmit} name={name}>
-				<div>
-					<label htmlFor="email">
-						<small>Email</small>
-					</label>
-					<input name="email" type="text" />
-				</div>
-				<div>
-					<label htmlFor="password">
-						<small>Password</small>
-					</label>
-					<input name="password" type="password" />
-				</div>
-				<div>
-					<button type="submit">{displayName}</button>
-				</div>
-				{error && error.response && <div> {error.response.data} </div>}
-			</form>
-		</div>
-	);
-};
+	render() {
+		const { name, displayName, handleSubmit, status, error } = this.props;
+
+		return (
+			<Segment placeholder>
+				<Grid relaxed="very" stackable>
+					<Grid.Column>
+						<Form name={name} onSubmit={handleSubmit}>
+							<Form.Input
+								icon="user"
+								iconPosition="left"
+								label="Email"
+								placeholder="Email"
+								name="email"
+							/>
+							<Form.Input
+								icon="lock"
+								iconPosition="left"
+								label="Password"
+								type="password"
+								name="password"
+							/>
+
+							<Button content="Login" primary type="submit" />
+						</Form>
+					</Grid.Column>
+				</Grid>
+			</Segment>
+		);
+	}
+}
 
 /**
  * CONTAINER

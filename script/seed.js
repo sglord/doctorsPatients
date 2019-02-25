@@ -1,110 +1,136 @@
 'use strict';
 
 const db = require('../server/db');
-const { Patient, Doctor } = require('../server/db/models');
+const { Patient, Doctor, User } = require('../server/db/models');
 
 async function seed() {
 	await db.sync({ force: true });
 	console.log('db synced!');
 
+	const users = await Promise.all([
+		User.create({
+			email: 'cory@email.com',
+			password: '123'
+		}),
+		User.create({
+			email: 'murphy@email.com',
+			password: 'xxx'
+		}),
+		User.create({
+			email: 'Erik@email.com',
+			password: 'zzz'
+		}),
+		User.create({
+			email: 'Ryan@email.com',
+			password: '1234'
+		}),
+		User.create({
+			email: 'John@email.com',
+			password: '12345'
+		}),
+		User.create({
+			email: 'Joseph@email.com',
+			password: '1324124'
+		}),
+		User.create({
+			email: 'Jay@email.com',
+			password: 'afdsaf'
+		}),
+		User.create({
+			email: 'Danielle@email.com',
+			password: '1324'
+		}),
+		User.create({
+			email: 'Melanie@email.com',
+			password: 'adfasdf'
+		}),
+		User.create({
+			email: 'Megan@email.com',
+			password: 'adfafadf'
+		}),
+		User.create({
+			email: 'cody@email.com',
+			password: '12345xx'
+		}),
+		User.create({
+			email: 'alex@email.com',
+			password: '1234xx'
+		})
+	]);
 	const patients = await Promise.all([
 		Patient.create({
-			email: 'cory@email.com',
 			name: 'Cory',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: '123'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'murphy@email.com',
 			name: 'Murphy',
 			age: 47,
 			address: '555 avenue',
-			phone: '',
-			password: 'xxx'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'Erik@email.com',
 			name: 'Erik',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: 'zzz'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'Ryan@email.com',
 			name: 'Ryan',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: '1234'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'John@email.com',
 			name: 'John',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: '12345'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'Joseph@email.com',
 			name: 'Joseph',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: '1324124'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'Jay@email.com',
 			name: 'Jay',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: 'afdsaf'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'Danielle@email.com',
 			name: 'Danielle',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: '1324'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'Melanie@email.com',
 			name: 'Melanie',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: 'adfasdf'
+			phone: ''
 		}),
 		Patient.create({
-			email: 'Megan@email.com',
 			name: 'Megan',
 			age: 35,
 			address: '123 street',
-			phone: '',
-			password: 'adfafadf'
+			phone: ''
 		})
 	]);
 	const doctors = await Promise.all([
 		Doctor.create({
-			email: 'cody@email.com',
-			name: 'Dr. Cody',
-			password: '12345xx'
+			name: 'Dr. Cody'
 		}),
 		Doctor.create({
-			email: 'alex@email.com',
-			name: 'Dr. Alex',
-			password: '1234xx'
+			name: 'Dr. Alex'
 		})
 	]);
 
 	console.log(`seeded ${patients.length} patients`);
 	console.log(`seeded ${doctors.length} doctors`);
-
+	console.log(`seeded ${users.length} users`);
 	console.log(`seeded successfully`);
 }
 

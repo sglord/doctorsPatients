@@ -49,7 +49,7 @@ export default function(state = initialState, action) {
 		case SET_DOCTOR:
 			return { ...state, doctor: action.doctor };
 		case SET_DOCTOR_PATIENTS:
-			return { ...state, patient: action.patients };
+			return { ...state, patients: action.patients };
 		case SET_DOCTOR_SINGLE_PATIENT:
 			return { ...state, currentPatient: action.patient };
 		default:

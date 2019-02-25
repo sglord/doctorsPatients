@@ -5,14 +5,17 @@ module.exports = router;
 // /api/doctors
 // get one doctor info
 router.get('/:id', async (req, res, next) => {
-	console.log(req.user);
 	try {
 		if (req.user.id === Number(req.params.id)) {
+			// const doctor = await Doctor.findOne({
+			// 	where: {
+			// 		id: req.params.id
+			// 	}
+			// });
 			const doctor = await Doctor.findOne({
 				where: {
-					id: req.params.id
-				},
-				attributes: ['id', 'email', 'name']
+					userId: req.params.id
+				}
 			});
 			res.json(doctor);
 		} else {
@@ -27,10 +30,11 @@ router.get('/:id', async (req, res, next) => {
 router.get('/:id/patients', async (req, res, next) => {
 	let { id } = req.params;
 	try {
+		console.log(req.user);
 		if (req.user.id === Number(id)) {
 			const doctorsPatients = await Doctor.findOne({
 				where: {
-					id: id
+					userId: req.params.id
 				},
 				include: [{ model: Patient }]
 			});
@@ -46,7 +50,6 @@ router.get('/:id/patients', async (req, res, next) => {
 // get one patient info
 router.get('/:id/patients/:patientId', async (req, res, next) => {
 	let { id, patientId } = req.params;
-	console.log(req.user);
 	try {
 		if (req.user.id === Number(id)) {
 			const doctorSinglePatient = await Patient.findOne({

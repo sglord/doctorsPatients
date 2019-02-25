@@ -24,9 +24,8 @@ passport.serializeUser((user, done) => done(null, user.id));
 
 // need to handle doctor or user login to find by id
 passport.deserializeUser(async (id, done) => {
-	console.log('passport');
 	try {
-		const user = await db.models.doctor.findById(id);
+		const user = await db.models.user.findById(id);
 		done(null, user);
 	} catch (err) {
 		done(err);
@@ -47,7 +46,7 @@ const createApp = () => {
 	// session middleware with passport
 	app.use(
 		session({
-			secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+			secret: process.env.SESSION_SECRET || 'secret',
 			store: sessionStore,
 			resave: false,
 			saveUninitialized: false

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Header, Divider, Icon, Container } from 'semantic-ui-react';
 
 import UserInfo from './UserInfo';
+import { updatePatient } from '../store/patients';
 // DOCTORS
 // doctors/patients
 // home page should show info and list of all of their patients
@@ -38,17 +39,15 @@ class UserHome extends Component {
 		this.userInfoSaveHandler = this.userInfoSaveHandler.bind(this);
 	}
 	_onChange(event) {
-		console.log(event.target.name);
-		console.log(event.target.value);
 		this.setState({
 			[event.target.name]: event.target.value
 		});
 	}
 	_onSubmit = event => {
 		event.preventDefault();
-		const updatedUserInfo = this.state;
 		const id = this.props.user.id;
-		this.props.fetchUpdatedUser(updatedUserInfo, id);
+		const updatedPatientInfo = this.state;
+		this.props.updatePatient(id, updatedPatientInfo);
 	};
 
 	userInfoEditHandler() {
@@ -65,6 +64,9 @@ class UserHome extends Component {
 		} else if (this.state.editForm === false) {
 			this.setState({ editForm: true });
 		}
+		const id = this.props.user.id;
+		const updatedPatientInfo = this.state;
+		this.props.updatePatient(id, updatedPatientInfo);
 	}
 
 	render() {
@@ -72,13 +74,13 @@ class UserHome extends Component {
 
 		return (
 			<div>
-				<Header as="h2">Welcome {user.name}</Header>
+				<Header as="h2">Welcome</Header>
 				<Divider fitted />
 				<React.Fragment>
 					<Divider horizontal>
 						<Header as="h4">
-							<Icon name="settings" />
-							patient Information
+							<Icon name="info circle" />
+							Patient Information
 						</Header>
 					</Divider>
 				</React.Fragment>
@@ -101,13 +103,18 @@ class UserHome extends Component {
  * CONTAINER
  */
 const mapState = state => {
-	console.log(state.user);
 	return {
 		user: state.user
 	};
 };
 
-export default connect(mapState)(UserHome);
+const mapDispatch = dispatch => {
+	return {
+		updatePatient: (id, updatedPatientInfo) =>
+			dispatch(updatePatient(id, updatedPatientInfo))
+	};
+};
+export default connect(mapState, mapDispatch)(UserHome);
 
 /**
  * PROP TYPES
