@@ -45,5 +45,5 @@ This project was completed in the confines of a day. Even though the project was
 4.  patients are displayed in a list format
 5.  clicking the 'more details' button will display a modal with more information for that patient
 6.  logout by clicking the navbar 'logout' tab
-7.  log in with username: Joseph@email.com password: 1324124
+7.  log in with username: Cory@email.com password: 123
 8.  this will display the user
