@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import {
 	Container,
 	Modal,
@@ -31,12 +30,11 @@ class DoctorHome extends Component {
 		this.setState({ modalOpen: false });
 	}
 	render() {
+		console.log(this.props);
 		return (
 			<Container>
 				<Divider hidden />
-
-				<Header as="h1">Welcome, {this.props.user.email}</Header>
-
+				<Header as="h1">Welcome, Dr. {this.props.user.name}</Header>
 				<div>
 					<Divider hidden />
 					<Container>

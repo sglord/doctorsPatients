@@ -28,7 +28,14 @@ export const me = () => async dispatch => {
 		console.error(err);
 	}
 };
-
+export const updateUser = (id, updatedUser) => async dispatch => {
+	try {
+		const { data } = await axios.put(`/api/patients/${id}`, updatedUser);
+		dispatch(getUser(data));
+	} catch (error) {
+		throw new Error('Could not update');
+	}
+};
 // method should be patient or doctors
 export const auth = (email, password, method) => async dispatch => {
 	let res;

@@ -4,20 +4,11 @@ module.exports = router;
 
 router.post('/login', async (req, res, next) => {
 	try {
-		console.log(req.body.method);
-		let user;
-		if (req.body.method === 'doctors') {
-			user = await User.findOne({
-				where: { email: req.body.email }
-				// include: [{ model: Doctor }]
-			});
-		}
-		if (req.body.method === 'patients') {
-			user = await User.findOne({
-				where: { email: req.body.email }
-				// include: [{ model: Patient }]
-			});
-		}
+		const user = await User.findOne({
+			where: { email: req.body.email }
+			// include: [{ model: Doctor }]
+		});
+
 		if (!user) {
 			res.status(401).send('Wrong username and/or password');
 		} else if (!user.correctPassword(req.body.password)) {

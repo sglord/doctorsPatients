@@ -1,12 +1,12 @@
 const router = require('express').Router();
-const { Patient } = require('../db/models');
+const { User } = require('../db/models');
 module.exports = router;
 
 //grab individual patient info
 router.get('/:id', async (req, res, next) => {
 	try {
 		if (req.user.id === Number(req.params.id)) {
-			const patient = await Patient.findOne({
+			const patient = await User.findOne({
 				where: {
 					id: req.params.id
 				},
@@ -34,7 +34,7 @@ router.put('/:id', async (req, res, next) => {
 
 	try {
 		if (req.user.id === Number(id)) {
-			const updatedPatient = await Patient.update(updatedPatientInfo, {
+			const updatedPatient = await User.update(updatedPatientInfo, {
 				where: {
 					id: id
 				},

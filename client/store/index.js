@@ -2,11 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import patients from './patients';
+// import patients from './patients';
 import doctors from './doctors';
 import user from './user';
 
-const reducer = combineReducers({ patients, doctors, user });
+const reducer = combineReducers({ doctors, user });
 const middleware = composeWithDevTools(
 	applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

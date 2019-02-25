@@ -12,7 +12,7 @@ class AuthForm extends Component {
 	};
 
 	render() {
-		const { name, displayName, handleSubmit, status, error } = this.props;
+		const { name, handleSubmit, error } = this.props;
 
 		return (
 			<Segment placeholder>

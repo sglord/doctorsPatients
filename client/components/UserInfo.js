@@ -60,7 +60,7 @@ class UserInfo extends Component {
 								<Grid.Column textAlign="left">
 									<React.Fragment>
 										<Form.Input
-											name="firstName"
+											name="name"
 											defaultValue={user.name}
 											onChange={this.props._onChange}
 										/>

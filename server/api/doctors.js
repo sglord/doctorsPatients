@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Doctor, Patient } = require('../db/models');
+const { User } = require('../db/models');
 module.exports = router;
 
 // /api/doctors
@@ -7,14 +7,10 @@ module.exports = router;
 router.get('/:id', async (req, res, next) => {
 	try {
 		if (req.user.id === Number(req.params.id)) {
-			// const doctor = await Doctor.findOne({
-			// 	where: {
-			// 		id: req.params.id
-			// 	}
-			// });
-			const doctor = await Doctor.findOne({
+			const doctor = await User.findOne({
 				where: {
-					userId: req.params.id
+					id: req.params.id,
+					isDoctor: true
 				}
 			});
 			res.json(doctor);
@@ -30,13 +26,12 @@ router.get('/:id', async (req, res, next) => {
 router.get('/:id/patients', async (req, res, next) => {
 	let { id } = req.params;
 	try {
-		console.log(req.user);
 		if (req.user.id === Number(id)) {
-			const doctorsPatients = await Doctor.findOne({
+			const doctorsPatients = await User.findAll({
 				where: {
-					userId: req.params.id
+					doctorId: req.params.id
 				},
-				include: [{ model: Patient }]
+				include: [{ model: User, as: 'doctor' }]
 			});
 			res.json(doctorsPatients);
 		} else {
@@ -52,9 +47,10 @@ router.get('/:id/patients/:patientId', async (req, res, next) => {
 	let { id, patientId } = req.params;
 	try {
 		if (req.user.id === Number(id)) {
-			const doctorSinglePatient = await Patient.findOne({
+			const doctorSinglePatient = await User.findOne({
 				where: {
-					id: patientId
+					id: patientId,
+					doctorId: id
 				}
 			});
 			res.json(doctorSinglePatient);

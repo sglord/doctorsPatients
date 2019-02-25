@@ -78,10 +78,3 @@ const mapDispatch = dispatch => {
 };
 
 export default connect(mapState, mapDispatch)(Navbar);
-
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-	isLoggedIn: PropTypes.bool.isRequired
-};

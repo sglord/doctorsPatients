@@ -4,12 +4,6 @@ import { Grid, Container, Header } from 'semantic-ui-react';
 const PatientInfo = props => {
 	const { patient } = props;
 	return (
-		// <div>
-		// 	<h2>Patient Name: {props.patient.name}</h2>
-		// 	<p>Patient Age: {props.patient.age}</p>
-		// 	<p>Patient Address: {props.patient.address}</p>
-		// 	<p>Patient Phone: {props.patient.phone}</p>
-		// </div>
 		<Container>
 			<Header>Patient Info</Header>
 			<Grid padded relaxed>
