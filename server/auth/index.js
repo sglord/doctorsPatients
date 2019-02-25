@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const { Doctor, Patient, User } = require('../db/models');
+const { User } = require('../db/models');
 module.exports = router;
 
 router.post('/login', async (req, res, next) => {
 	try {
 		const user = await User.findOne({
 			where: { email: req.body.email }
-			// include: [{ model: Doctor }]
 		});
 
 		if (!user) {

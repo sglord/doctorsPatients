@@ -1,133 +1,49 @@
-# Boilermaker
+#DoctorsPatients
 
-_Good things come in pairs_
+#Overview
+DoctorsPatients is an applicaiton that allows users to log in as either doctors or patients.
 
-Looking to mix up a backend with express/sequelize and a frontend with react/redux? That's `boilermaker`!
+When a doctor logs in, they are then brought to their home page which displays a list of the patients that are assigned to them. Within that list they can click 'view details' to be shown a modal with extended patient information.
 
-Follow along with the workshop to make your own! This canonical version can serve as a reference, or a starting point all on its own.
+When a patient logs in, they are show their patient information page. They can then choose to edit their information if desired.
 
-## Setup
+#FrontEnd
+The front end is built using React, Redux, Semantic UI. The home page conditionally renders the correct user page based on traits associated with the logged in user. The NavBar is persistent throughout each view and offers a quick link to logout/login page.
 
-To use this boilerplate, you'll need to take the following steps:
+CombineReducer and connect is used with redux to separate out the added functionality that doctors have and to create a more organized store. Within the redux dispatches,axios is used for HTTP requests to the server
 
-* Don't fork or clone this repo! Instead, create a new, empty directory on your machine and `git init` (or create an empty repo on Github and clone it to your local machine)
-* Run the following commands:
+Semantic UI was used for quick and professional styling and component based design.
 
-```
-git remote add boilermaker https://github.com/FullstackAcademy/boilermaker.git
-git fetch boilermaker
-git merge boilermaker/master
-```
+#Server
+The server is built in Node.js using express. The inital user log in route is via /auth. Passport is used to handle sessions.
 
-Why did we do that? Because every once in a while, `boilermaker` may be updated with additional features or bug fixes, and you can easily get those changes from now on by entering:
+All data routes are via /api. The /api/doctors route provides any information for the doctor front end components. I initially created other routes for doctor info and single patients, but decided they were not needed in the finished version.
 
-```
-git fetch boilermaker
-git merge boilermaker/master
-```
+The api/patients route provides endpoints for getting a single patient and updating a single patient. These are protected by comparing the current user and selected ID. If the matching user isn't logged in, they will receive an error preventing them from accessing the user data. Additionally, for updating the user some protection is used by extrapolating out the user info from the body to prevent incorrect/nefarious traits to be send to the database. Given more time, some form validation could be added on the front end forms to ensure only desired information gets through.
 
-## Customize
+#databse
+There is only one model in the database. For the length of this project I felt it was most straightforward to keep all users under the same table and create the 'isDoctor' trait to check if the user is a doctor or patient. I think for scalability and more robust options I would have created multiple tables with more complex associations, possible extracting user info to one table and creating doctors and patients that associate with userId as foreign keys and then a relationship between doctors and patients. I initally went down that route but decided against it for sake of completion.
 
-Now that you've got the code, follow these steps to get acclimated:
+#deployment
+The app is deployed on heroku with a seeded database at doctorspatients.herokuapp.com
 
-* Update project name and description in `package.json` and `.travis.yml` files
-* `npm install`, or `yarn install` - whatever you're into
-* Create two postgres databases: `boilermaker` and `boilermaker-test` (you can substitute these with the name of your own application - just be sure to go through and change the `package.json` and `.travis.yml` to refer to the new name)
-  * By default, running `npm test` will use `boilermaker-test`, while regular development uses `boilermaker`
-* Create a file called `secrets.js` in the project root
+#things to improve/change
+Testing - given a full fledged project test specs would need to be included to ensure scalability and functionality as changes happen.
+ContinuousIntegration - along with testing, CI would ensure little to no downtime for a deployed and scaled project and given a wider window and more personal time would have included a test suite.
+User Updating - I think the only real bug that came up towards teh end and just had to pass through. When updating a user information a refresh is needed to display the newly updated information correctly on the user home page. Handling the update process in redux differently with rendering the state/props would be able to display the correctly updated information without a manual refresh.
+Codebase - while i tried to stick with DRY principles, I know there are a few areas that were duplicated and could be pulled out into individual components.
+Organization - I fought with what direction to head in regards to doctors/patients db definitions and as a results this left refactoring code and some of it needs a second (or third) clean sweep.
 
-  * This file is `.gitignore`'d, and will _only_ be required in your _development_ environment
-  * Its purpose is to attach the secret env variables that you'll use while developing
-  * However, it's **very** important that you **not** push it to Github! Otherwise, _prying eyes_ will find your secret API keys!
-  * It might look like this:
+#conclusion
+This project was completed in the confines of a day. Even though the project was sat on for about a week, personal constraints left limited time to tackle it. I think in the process it definitely opened up the thought of handling how to verify and manage users with very different use goals ( doctors to view all their patients, extended info vs. users updating informatin and only viewing personal). I can see many use cases for created more robust schema to potentially offer uses to select doctors based on type, track appointments, and follow up information. Overall this was a good challenge to build out a full stack application using React,Redux, Node, Express, and PostGres and demonstrate those abilities. 
 
-  ```
-    process.env.GOOGLE_CLIENT_ID = 'hush hush'
-    process.env.GOOGLE_CLIENT_SECRET = 'pretty secret'
-    process.env.GOOGLE_CALLBACK = '/auth/google/callback'
-  ```
+#walkthrough
 
-* To use OAuth with Google, complete the step above with a real client ID and client secret from Google
-  * You can get them here: https://console.developers.google.com/apis/credentials
-* Finally, complete the section below to set up your linter
-
-## Linting
-
-Linters are fundamental to any project - they ensure that your code has a consistent style, which is critical to writing readable code.
-
-Boilermaker comes with a working linter (ESLint, with `eslint-config-fullstack`) "out of the box." However, everyone has their own style, so we recommend that you and your team work out yours and stick to it. Any linter rule that you object to can be "turned off" in `.eslintrc.json`. You may also choose an entirely different config if you don't like ours:
-
-* [Standard style guide](https://standardjs.com/)
-* [Airbnb style guide](https://github.com/airbnb/javascript)
-* [Google style guide](https://google.github.io/styleguide/jsguide.html)
-
-## Start
-
-`npm run start-dev` will make great things happen!
-
-If you want to run the server and/or webpack separately, you can also `npm run start-server` and `npm run build-client`.
-
-From there, just follow your bliss.
-
-## Deployment
-
-Ready to go world wide? Here's a guide to deployment! There are two (compatible) ways to deploy:
-
-* automatically, via continuous integration
-* manually, from your local machine
-
-Either way, you'll need to set up your deployment server to start:
-
-### Prep
-
-1.  Set up the [Heroku command line tools](https://devcenter.heroku.com/articles/heroku-cli)
-2.  `heroku login`
-3.  Add a git remote for heroku:
-
-* **If you're creating a new app...**
-
-  1.  `heroku create` or `heroku create your-app-name` if you have a name in mind.
-  2.  `heroku addons:create heroku-postgresql:hobby-dev` to add ("provision") a postgres database to your heroku dyno
-
-* **If you already have a Heroku app...**
-
-  1.  `heroku git:remote your-app-name` You'll need to be a collaborator on the app.
-
-### When you're ready to deploy
-
-#### Option A: Automatic Deployment via Continuous Integration
-
-(_**NOTE**: This step assumes that you already have Travis-CI testing your code._)
-
-CI is not about testing per se – it's about _continuously integrating_ your changes into the live application, instead of periodically _releasing_ new versions. CI tools can not only test your code, but then automatically deploy your app. Boilermaker comes with a `.travis.yml` configuration almost ready for deployment; follow these steps to complete the job.
-
-1.  Run `git checkout master && git pull && git checkout -b f/travis-deploy` (or use some other new branch name).
-2.  Un-comment the bottom part of `.travis.yml` (the `before_deploy` and `deploy` sections)
-3.  Add your Heroku app name to `deploy.app`, where it says "YOUR HEROKU APP NAME HERE". For example, if your domain is `cool-salty-conifer.herokuapp.com`, your app name is `cool-salty-conifer`.
-4.  Install the Travis CLI tools by following [the instructions here](https://github.com/travis-ci/travis.rb#installation).
-5.  Run `travis encrypt $(heroku auth:token) --org` to encrypt your Heroku API key. _**Warning:** do not run the `--add` command suggested by Travis, that will rewrite part of our existing config!_
-6.  Copy-paste your encrypted API key into the `.travis.yml` file under `deploy.api_key.secure`, where it says "YOUR ENCRYPTED API KEY HERE".
-7.  `git add -A && git commit -m 'travis: activate deployment' && git push -u origin f/travis-deploy`
-8.  Make a PR for the new branch, get it approved, and merge it into master.
-
-That's it! From now on, whenever `master` is updated on GitHub, Travis will automatically push the app to Heroku for you.
-
-#### Option B: Manual Deployment from your Local Machine
-
-Some developers may prefer to control deployment rather than rely on automation. Your local copy of the application can be pushed up to Heroku at will, using Boilermaker's handy deployment script:
-
-1.  Make sure that all your work is fully committed and pushed to your master branch on Github.
-2.  If you currently have an existing branch called "deploy", delete it now (`git branch -d deploy`). We're going to use a dummy branch with the name "deploy" (see below), so if you have one lying around, the script below will error
-3.  `npm run deploy` - this will cause the following commands to happen in order:
-
-* `git checkout -b deploy`: checks out a new branch called "deploy". Note that the name "deploy" here isn't magical, but it needs to match the name of the branch we specify when we push to our heroku remote.
-* `webpack -p`: webpack will run in "production mode"
-* `git add -f public/bundle.js public/bundle.js.map`: "force" add the otherwise gitignored build files
-* `git commit --allow-empty -m 'Deploying'`: create a commit, even if nothing changed
-* `git push --force heroku deploy:master`: push your local "deploy" branch to the "master" branch on heroku
-* `git checkout master`: return to your master branch
-* `git branch -D deploy`: remove the deploy branch
-
-Now, you should be deployed!
-
-Why do all of these steps? The big reason is because we don't want our production server to be cluttered up with dev dependencies like webpack, but at the same time we don't want our development git-tracking to be cluttered with production build files like bundle.js! By doing these steps, we make sure our development and production environments both stay nice and clean!
+1.  go to doctorspatients.herokuapp.com
+2.  log in with username: cody@email.com password: 12345xx
+3.  this will then display the doctor home page
+4.  patients are displayed in a list format
+5.  clicking the 'more details' button will display a modal with more information for that patient
+6.  logout by clicking the navbar 'logout' tab
+7.  log in with username: Joseph@email.com password: 1324124
+8.  this will display the user
